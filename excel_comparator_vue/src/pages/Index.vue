@@ -15,6 +15,8 @@ let file1Md5 = ''
 let file2Md5 = ''
 let matchResultFilename = ''
 
+const title1 = ref('')
+const title2 = ref('')
 
 const beforeUpload = (file, type) => {
   const isExcel = file.type.includes('excel') || file.name.endsWith('.xls') || file.name.endsWith('.xlsx');
@@ -73,6 +75,8 @@ const startComparison = async () => {
       showResult.value = true
       results.value = res.data.rows
       matchResultFilename = res.data.matchResultFilename || ''
+      title1.value = res.data.title1
+      title2.value = res.data.title2
       message.success('比对完成！');
     } else {
       message.error(res.message);
@@ -80,13 +84,14 @@ const startComparison = async () => {
   }).finally(() => {
     setTimeout(() => {
       loading.value = false;
-    }, 2000);
+    }, 1000);
   })
 };
 
 const exportResult = () => {
   if (matchResultFilename){
     window.open('/api/file/' + matchResultFilename)
+    // window.open(process.env.VUE_APP_BASE_API + '/file/' + matchResultFilename)
     message.success('导出成功！');
   }else {
     message.error('无可导出的匹配结果')
@@ -119,10 +124,9 @@ const exportResult = () => {
             <p class="ant-upload-drag-icon">
               <InboxOutlined/>
             </p>
-            <p class="ant-upload-text">Click or drag file to this area to upload</p>
+            <p class="ant-upload-text">单击或拖动文件到此区域进行上传</p>
             <p class="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned
-              files.
+              请上传xlsx或xls文件
             </p>
             <div class="file" v-if="fileList1.length > 0">
               <svg t="1741508222510" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -142,10 +146,9 @@ const exportResult = () => {
             <p class="ant-upload-drag-icon">
               <InboxOutlined/>
             </p>
-            <p class="ant-upload-text">Click or drag file to this area to upload</p>
+            <p class="ant-upload-text">单击或拖动文件到此区域进行上传</p>
             <p class="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned
-              files.
+              请上传xlsx或xls文件
             </p>
             <div class="file" v-if="fileList2.length > 0">
               <svg t="1741508222510" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -180,12 +183,12 @@ const exportResult = () => {
                               key: 'id',
                             },
                             {
-                              title: 'A表实际用量',
+                              title: title1,
                               dataIndex: 'quantity1',
                               key: 'quantity1',
                             },
                             {
-                              title: 'B表实际用量',
+                              title: title2,
                               dataIndex: 'quantity2',
                               key: 'quantity2',
                             },

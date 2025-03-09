@@ -25,4 +25,4 @@ server:
   servlet:
     context-path: /api
 base-config:
-  upload-path: /Users/hehaoyang/project/idea/25-03-09/ExcelComparatorPro/upload
+  upload-path: C:\project\idea\ExcelComparatorPro\upload
