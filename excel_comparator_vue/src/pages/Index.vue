@@ -207,8 +207,8 @@ const exportResult = () => {
 
 .container {
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  //overflow: hidden;
   margin: 0;
   background: #F5F5F5;
 
