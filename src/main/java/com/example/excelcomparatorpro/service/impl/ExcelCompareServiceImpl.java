@@ -53,8 +53,8 @@ public class ExcelCompareServiceImpl implements ExcelCompareService {
         }
         List<ExcelModel> dataList1 = builder1.head(ExcelModel.class).doReadSync();
         List<ExcelModel> dataList2 = builder2.head(ExcelModel.class).doReadSync();
-        dataList1 = dataList1.stream().filter(item -> item.getLevel() != null).collect(Collectors.toList());
-        dataList2 = dataList2.stream().filter(item -> item.getLevel() != null).collect(Collectors.toList());
+        dataList1 = dataList1.stream().filter(item -> item.getLevel() != null && item.getId() != null && item.getQuantity() != null).collect(Collectors.toList());
+        dataList2 = dataList2.stream().filter(item -> item.getLevel() != null && item.getId() != null && item.getQuantity() != null).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(dataList1)){
             throw new ServiceException("文件1为非BOM表或数据为空");
         }
